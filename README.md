@@ -1,34 +1,35 @@
-# Netflix Phụ Đề Song Ngữ (Netflix Bilingual Subtitles)
+# Phụ Đề Song Ngữ — Bilingual Subtitles
 
-Extension trình duyệt giúp hiển thị phụ đề song ngữ trên Netflix.
+Tiện ích mở rộng (extension) cho trình duyệt, giúp hiển thị **phụ đề song ngữ** khi xem phim trên nền tảng phát trực tuyến. Tự động lấy phụ đề thứ hai và hiển thị song song với phụ đề gốc.
 
-## 🚀 Cài đặt
+## ✨ Tính năng
 
-### Bước 1: Tạo icons
-Mở file `generate-icons.html` trong trình duyệt, nhấn "Tải xuống tất cả icons".
-Di chuyển các file `icon16.png`, `icon48.png`, `icon128.png` vào thư mục `icons/`.
+- 🌐 **Phụ đề song ngữ** — Hiển thị hai ngôn ngữ đồng thời (VD: Tiếng Việt + Tiếng Anh)
+- 🔄 **Tự động lấy phụ đề** — Tự động đọc danh sách track từ manifest và tải phụ đề thứ hai
+- 🎨 **Tùy chỉnh hiển thị** — Màu chữ, cỡ chữ (×1 đến ×5), độ mờ, vị trí (trên/dưới)
+- 🖱️ **Kéo thả** — Nhấn và kéo phụ đề thứ hai đến vị trí bất kỳ
+- 📺 **Toàn màn hình** — Hoạt động ở cả chế độ cửa sổ và toàn màn hình
+- 🔤 **Giữ xuống dòng** — Hỗ trợ phụ đề nhiều dòng, căn giữa từ giữa ra
+- 🔄 **Tự chuyển tập** — Tự nhận diện khi sang tập mới, không cần refresh
 
-### Bước 2: Cài đặt extension
-1. Mở Chrome/Edge, vào `chrome://extensions/`
-2. Bật **Developer mode** (góc phải trên)
-3. Nhấn **Load unpacked**
-4. Chọn thư mục `netflix-bilingual-subtitles/`
+## 🚀 Cài đặt (Development)
 
-### Bước 3: Sử dụng
-1. Mở [netflix.com](https://netflix.com), phát video bất kỳ
-2. Bật phụ đề với ngôn ngữ chính (VD: tiếng Việt)
-3. **Tạm thời chuyển** phụ đề sang ngôn ngữ thứ hai (VD: tiếng Anh) trong menu Netflix
-4. Extension sẽ tự động ghi nhớ và hiển thị cả hai ngôn ngữ đồng thời
-5. Mở popup extension để tùy chỉnh màu sắc, vị trí, kích thước
+### Cách 1: Tải từ Chrome Web Store
+*(Sắp ra mắt)*
 
-## 🎯 Tính năng
+### Cách 2: Cài đặt thủ công (Developer mode)
+1. Tải source code về máy
+2. Mở `chrome://extensions/`
+3. Bật **Developer mode** (góc phải trên)
+4. Nhấn **Load unpacked** → chọn thư mục source code
 
-- ✅ Hiển thị phụ đề song ngữ đồng thời
-- ✅ Tự động bắt dữ liệu phụ đề từ Netflix
-- ✅ Tùy chỉnh màu chữ, kích thước, độ mờ
-- ✅ Tùy chỉnh vị trí (trên/dưới phụ đề gốc)
-- ✅ Hỗ trợ Netflix Việt Nam & quốc tế
-- ✅ Hoạt động với Manifest V3
+## 📖 Cách sử dụng
+
+1. Mở nền tảng phát trực tuyến, phát video bất kỳ
+2. Bật phụ đề ở ngôn ngữ tùy chọn
+3. Extension tự động hiển thị phụ đề tiếng Việt song song
+4. Mở popup extension để tùy chỉnh màu sắc, vị trí, kích thước
+5. Kéo phụ đề thứ hai để di chuyển đến vị trí mong muốn
 
 ## 🛠 Cấu trúc thư mục
 
@@ -45,20 +46,30 @@ netflix-bilingual-subtitles/
 │   ├── popup.html         # Giao diện popup
 │   ├── popup.js           # Logic popup
 │   └── popup.css          # Style popup
-├── icons/                 # Thư mục chứa icons (tự tạo)
-└── generate-icons.html    # Công cụ tạo icons
+├── icons/                 # Icons
+└── PRIVACY.md             # Chính sách bảo mật
 ```
+
+## 🔒 Bảo mật & Quyền riêng tư
+
+- ❌ **KHÔNG** thu thập thông tin cá nhân
+- ❌ **KHÔNG** gửi dữ liệu đến máy chủ bên ngoài
+- ❌ **KHÔNG** theo dõi hoạt động người dùng
+- ✅ Tất cả xử lý phụ đề thực hiện **cục bộ trong trình duyệt**
+
+Xem chi tiết: [PRIVACY.md](PRIVACY.md)
 
 ## 📝 Cách hoạt động
 
-1. **inject.js** (chạy trong MAIN world) can thiệp `fetch` và `XMLHttpRequest` để bắt các response phụ đề từ Netflix
-2. **content.js** (ISOLATED world) nhận dữ liệu, parse TTML và hiển thị phụ đề thứ hai dưới dạng overlay
-3. **ttml-parser.js** parse định dạng TTML/DFXP mà Netflix sử dụng cho phụ đề
-4. **background.js** quản lý cài đặt và giao tiếp
-5. **popup/** cung cấp giao diện người dùng để cấu hình
+1. **inject.js** (MAIN world) đọc response phụ đề định dạng TTML từ trình duyệt
+2. **content.js** (ISOLATED world) parse dữ liệu và hiển thị overlay
+3. **ttml-parser.js** phân tích cú pháp TTML/DFXP (tick rate, line breaks, styling)
+4. **popup** cung cấp giao diện cấu hình
 
-## ⚠️ Lưu ý
+## 📜 License
 
-- Extension này KHÔNG thu thập bất kỳ dữ liệu cá nhân nào
-- Chỉ hoạt động trên `*.netflix.com`
-- Mã nguồn mở, bạn có thể kiểm tra toàn bộ code
+MIT License — Tự do sử dụng, chỉnh sửa và phân phối.
+
+---
+
+**Lưu ý:** Tiện ích này không liên kết, không được bảo trợ bởi bất kỳ nền tảng phát trực tuyến nào. Tên các nền tảng được nhắc đến chỉ nhằm mục đích mô tả tính năng.
