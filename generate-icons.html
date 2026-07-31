@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Generate Extension Icons</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px;
+      background: #1a1a2e;
+      color: #fff;
+    }
+    h1 { color: #e50914; margin-bottom: 10px; }
+    p { color: #aaa; margin-bottom: 30px; }
+    .icons-row { display: flex; gap: 30px; align-items: flex-end; margin-bottom: 30px; }
+    .icon-block { text-align: center; }
+    .icon-block canvas { border: 2px solid #333; border-radius: 8px; margin-bottom: 8px; }
+    .icon-block span { color: #888; font-size: 12px; }
+    button {
+      background: #e50914;
+      color: #fff;
+      border: none;
+      padding: 12px 30px;
+      border-radius: 6px;
+      font-size: 14px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    button:hover { background: #f40612; }
+    .instructions {
+      margin-top: 30px;
+      background: #12121f;
+      padding: 16px 24px;
+      border-radius: 8px;
+      font-size: 12px;
+      color: #888;
+      line-height: 1.6;
+    }
+    .instructions code { color: #e50914; background: #1a1a2e; padding: 2px 6px; border-radius: 3px; }
+  </style>
+</head>
+<body>
+  <h1>🎬 Netflix Phụ Đề Song Ngữ</h1>
+  <p>Icon Generator</p>
+
+  <div class="icons-row">
+    <div class="icon-block">
+      <canvas id="icon16" width="16" height="16"></canvas>
+      <span>16×16</span>
+    </div>
+    <div class="icon-block">
+      <canvas id="icon48" width="48" height="48"></canvas>
+      <span>48×48</span>
+    </div>
+    <div class="icon-block">
+      <canvas id="icon128" width="128" height="128"></canvas>
+      <span>128×128</span>
+    </div>
+  </div>
+
+  <button onclick="downloadAll()">📥 Tải xuống tất cả icons</button>
+
+  <div class="instructions">
+    <p>Sau khi tải xuống, di chuyển các file vào thư mục <code>icons/</code> của extension:</p>
+    <p><code>netflix-bilingual-subtitles/icons/icon16.png</code></p>
+    <p><code>netflix-bilingual-subtitles/icons/icon48.png</code></p>
+    <p><code>netflix-bilingual-subtitles/icons/icon128.png</code></p>
+  </div>
+
+  <script>
+    function drawIcon(canvas, size) {
+      const ctx = canvas.getContext('2d');
+
+      // Background circle
+      const cx = size / 2;
+      const cy = size / 2;
+      const r = size / 2 - 1;
+
+      // Dark background
+      ctx.fillStyle = '#1a1a2e';
+      ctx.beginPath();
+      ctx.arc(cx, cy, r, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Netflix red arc for film feel
+      ctx.strokeStyle = '#e50914';
+      ctx.lineWidth = Math.max(1, size / 8);
+      ctx.beginPath();
+      ctx.arc(cx, cy, r * 0.65, -0.6, Math.PI + 0.6);
+      ctx.stroke();
+
+      // "CC" text (closed captions symbol)
+      ctx.fillStyle = '#ffffff';
+      ctx.font = `bold ${size * 0.5}px sans-serif`;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText('CC', cx, cy);
+
+      // Small "2" to indicate bilingual
+      ctx.fillStyle = '#ffff00';
+      ctx.font = `bold ${size * 0.28}px sans-serif`;
+      ctx.fillText('2', cx + size * 0.22, cy - size * 0.08);
+    }
+
+    // Draw all icons
+    drawIcon(document.getElementById('icon16'), 16);
+    drawIcon(document.getElementById('icon48'), 48);
+    drawIcon(document.getElementById('icon128'), 128);
+
+    function downloadAll() {
+      downloadCanvas('icon16', 16);
+      setTimeout(() => downloadCanvas('icon48', 48), 150);
+      setTimeout(() => downloadCanvas('icon128', 128), 300);
+    }
+
+    function downloadCanvas(id, size) {
+      const canvas = document.getElementById(id);
+      const link = document.createElement('a');
+      link.download = `icon${size}.png`;
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Netflix Phụ Đề Song Ngữ</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="popup-container">
+    <!-- Header -->
+    <div class="header">
+      <span class="header-icon">🎬</span>
+      <h1>Phụ Đề Song Ngữ</h1>
+    </div>
+
+    <!-- Toggle -->
+    <div class="section">
+      <div class="toggle-row">
+        <span class="toggle-label">Bật/Tắt</span>
+        <label class="switch">
+          <input type="checkbox" id="toggleEnabled" checked>
+          <span class="slider"></span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Secondary Language -->
+    <div class="section">
+      <label class="section-label">Ngôn ngữ phụ đề thứ hai</label>
+      <div id="trackList" class="track-list">
+        <div class="empty-state">Đang chờ dữ liệu phụ đề...</div>
+      </div>
+      <p class="hint">Phát video trên Netflix để extension bắt đầu thu thập phụ đề.</p>
+    </div>
+
+    <!-- Display Settings -->
+    <div class="section collapse-section">
+      <div class="collapse-header" id="displaySettingsToggle">
+        <span>⚙️ Cài đặt hiển thị</span>
+        <span class="collapse-arrow">▼</span>
+      </div>
+      <div class="collapse-content" id="displaySettings">
+        <!-- Position -->
+        <div class="setting-row">
+          <label>Vị trí</label>
+          <select id="positionSelect">
+            <option value="above">Phía trên phụ đề gốc</option>
+            <option value="below">Phía dưới phụ đề gốc</option>
+          </select>
+        </div>
+
+        <!-- Color -->
+        <div class="setting-row">
+          <label>Màu chữ</label>
+          <div class="color-picker-row">
+            <input type="color" id="colorPicker" value="#ffff00">
+            <span class="color-preview" id="colorPreview">Aa</span>
+          </div>
+        </div>
+
+        <!-- Size -->
+        <div class="setting-row">
+          <label>Cỡ chữ</label>
+          <select id="sizeSelect">
+            <option value="1.0em">Nhỏ (= gốc)</option>
+            <option value="1.5em" selected>Vừa</option>
+            <option value="2.0em">Vừa lớn</option>
+            <option value="2.5em">Lớn</option>
+            <option value="3.0em">Rất lớn (×3)</option>
+            <option value="4.0em">Khổng lồ (×4)</option>
+            <option value="5.0em">Tối đa (×5)</option>
+          </select>
+        </div>
+
+        <!-- Opacity -->
+        <div class="setting-row">
+          <label>Độ mờ: <span id="opacityValue">0.9</span></label>
+          <input type="range" id="opacitySlider" min="0.3" max="1.0" step="0.05" value="0.9">
+        </div>
+      </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="section actions-section">
+      <button id="refreshBtn" class="btn btn-secondary">🔄 Làm mới phụ đề</button>
+      <button id="resetPosBtn" class="btn btn-secondary" style="margin-top:6px">📍 Đặt lại vị trí phụ đề</button>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <p>Cách dùng:</p>
+      <ol>
+        <li>Mở Netflix, phát video</li>
+        <li>Bật phụ đề ở ngôn ngữ tùy chọn</li>
+        <li>Extension tự động hiển thị
+            phụ đề tiếng Việt song song</li>
+        <li>Kéo phụ đề để di chuyển</li>
+      </ol>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

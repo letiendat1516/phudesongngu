@@ -1,0 +1,38 @@
+{
+  "manifest_version": 3,
+  "name": "Phụ Đề Song Ngữ — Bilingual Subtitles",
+  "version": "1.0.0",
+  "description": "Hiển thị phụ đề song ngữ (tiếng Việt + tiếng Anh) khi xem phim. Tự động lấy phụ đề thứ hai và hiển thị song song với phụ đề gốc.",
+  "permissions": ["storage"],
+  "host_permissions": [
+    "*://*.netflix.com/*",
+    "*://*.nflxvideo.net/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["*://*.netflix.com/*"],
+      "js": ["lib/ttml-parser.js", "content.js"],
+      "css": ["content.css"],
+      "run_at": "document_start",
+      "world": "ISOLATED"
+    },
+    {
+      "matches": ["*://*.netflix.com/*"],
+      "js": ["inject.js"],
+      "run_at": "document_start",
+      "world": "MAIN"
+    }
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_title": "Phụ Đề Song Ngữ"
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}

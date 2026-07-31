@@ -1,0 +1,31 @@
+/* ============ Netflix Bilingual Subtitles - Styles ============ */
+/* NOTE: All overlay positioning/display is controlled via inline styles
+   in content.js (createOverlays/applyOverlayStyles/renderSecondarySubtitle).
+   We deliberately do NOT set display/position/transform here, because
+   inline `style.display = ''` falls back to this stylesheet, and we don't
+   want it to fall back to `display: none`. */
+
+.nbs-subtitle-overlay {
+  pointer-events: none;
+  text-align: center;
+  will-change: contents;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* ============ Notification ============ */
+
+@keyframes nbs-fadeInOut {
+  0% {
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
