@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Phụ Đề Song Ngữ — Bilingual Subtitles",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Hiển thị phụ đề song ngữ (tiếng Việt + tiếng Anh) khi xem phim. Tự động lấy phụ đề thứ hai và hiển thị song song với phụ đề gốc.",
   "permissions": ["storage"],
   "host_permissions": [
